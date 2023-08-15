@@ -1,0 +1,30 @@
+Enteros:
+
+SMALLINT: entero de 2 bytes (rango: -32,768 a 32,767)
+INTEGER: entero de 4 bytes (rango: -2,147,483,648 a 2,147,483,647)
+BIGINT: entero de 8 bytes (rango: -9,223,372,036,854,775,808 a 9,223,372,036,854,775,807)
+SERIAL: tipo especial que se utiliza para crear una columna de identidad autoincremental.
+Números de punto flotante:
+
+REAL: número de punto flotante de 4 bytes
+DOUBLE PRECISION: número de punto flotante de 8 bytes
+NUMERIC(p, s): número decimal con precisión arbitraria (p) y escala (s)
+Texto y caracteres:
+
+CHAR(n): cadena de caracteres de longitud fija
+VARCHAR(n): cadena de caracteres de longitud variable con límite máximo (n)
+TEXT: cadena de caracteres de longitud variable sin límite máximo
+Booleanos:
+
+BOOLEAN: valor booleano (true o false)
+Fecha y hora:
+
+DATE: fecha (formato: "YYYY-MM-DD")
+TIME: hora sin zona horaria (formato: "HH:MI:SS")
+TIMESTAMP: fecha y hora con zona horaria (formato: "YYYY-MM-DD HH:MI:SS")
+INTERVAL: intervalo de tiempo
+Otros tipos de datos:
+
+UUID: identificador único universal
+JSON / JSONB: tipo de datos para almacenar objetos JSON
+ARRAY: matriz de valores de un tipo de datos específico

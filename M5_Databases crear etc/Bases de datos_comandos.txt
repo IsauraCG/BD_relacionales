@@ -1,0 +1,260 @@
+http://www.postgresonline.com/special_feature.php?sf_name=postgresql83_psql_cheatsheet
+\c nombre_base Conectarse a una base de datos específica
+\l Listar todas las bases de datos existentes
+\? Ayuda
+\du Listar todos los usuarios en el motor
+\dt Listar todas las relaciones (o tablas) existentes en una base de datos específica
+\q Salir de la consola de PostgreSQL
+\! Obtener informacion del sistema y salir sin cerrar psql shell
+\h Mostrar la lista de comandos
+\conninfo detalles del usuario conectado
+--------------------------------------------------------------------------------------------------------------
+Crear un usuario:
+  CREATE USER nombre_usuario WITH PASSWORD passworrd_asignado;
+Eliminar usuarios
+  DROP USER nombre_usuario;
+Ver los usuarios existentes en la base de datos, se usa el comando
+  \du
+Cambiar contraseña de usuario
+  \password "nombre de usuario"
+Usuarios que tienen acceso a la base de datos
+  SELECT nombre_usuario FROM pg_user;
+Limitar a un usuario, se debe hacer lo siguiente:
+  CREATE USER nombre_usuario WITH comando_opcional;
+  
+Conectarse desde cualquier consola a una base de datos
+ psql -U username -W -d database_name 
+ --------------------------------------------------------------------------------------------------------------
+Para iniciar a la base de datos hay que cambiar de usuario y ejecutar el siguiente comando:
+  sudo su -l postgres
+Entrar mediante la terminal a la base de datos
+  psql
+Crear base de datos
+  CREATE DATABASE nombre;
+Crear titulo de base de datos
+  \C POST
+Crear tablas
+  CREATE TABLE POST ()
+Ver tabla creada
+  select * from post;
+Modificar tabla, agregando una columna
+  ALTER TABLE "nombre base de datos" ADD "nombre nuevo atriburo" "Tipo de datos"
+Agregar datos a columna creada
+  UPDATE "nombre base de datos" SET "nombre columna creada" = 'dato' WHERE "especificar identificador como id=1" ;
+Eliminar usuario
+  DELETE FROM "nombre base" WHERE "especificar identificador como id=1";
+Elimar base de datos
+  DROP DATABASE "nombre";
+
+
+Vincular 2 tablas de una base de datos
+  CREATE TABLE "nombre tabla"(id_comentario SERIAL, id_post INT, fecha_creacion TIMESTAMP, contenido VARCHAR(255), FOREIGN KEY(id_post) REFERENCES post(id));
+
+  
+Comandos más usados:
+● PASSWORD: Asigna una contraseña al usuario creado.
+● ENCRYPTED PASSWORD: Le asigna una contraseña encriptada al usuario creado.
+● UNENCRYPTED PASSWORD: Le asigna una contraseña no encriptada al usuario creado.
+● VALID UNTIL: La cuenta expirará en la fecha indicada.
+● CREATEDB: Permite al usuario crear bases de datos.
+● NOCREATEDB: No permite al usuario crear bases de datos.
+● SUPERUSER: Puede crear otros usuarios (volveremos a ver esto más adelante).
+● NOSUPERUSER: No puede crear otros usuarios.
+
+Permisos para los usuarios
+Una vez creados los usuarios, se pueden cambiar los permisos con los siguientes
+comandos:
+● Para dar acceso a todos los privilegios de una base de datos:
+GRANT ALL PRIVILEGES ON DATABASE database_name TO nombre_usuario;
+● Quitar privilegios de una base de datos:  
+REVOKE ALL PRIVILEGES ON DATABASE database_name FROM nombre_usuario;
+● Para dar permiso de creación de una base de datos se usa:
+ALTER USER nombre_usuario CREATEDB;
+● Para el caso de querer transformar al usuario en superuser:
+ALTER USER myuser WITH SUPERUSER;
+● Remover el superusuario:
+ALTER USER username WITH NOSUPERUSER;
+
+
+tipos de datos más comunes son:
+● INT: Números enteros de 4 bytes que pueden tomar valor desde -2147483648 hasta
++2147483647.
+● SMALLINT: Números enteros de 2 bytes que pueden tomar valor desde -32768 hasta
++32767.
+● BIGINT: Números enteros de 8 bytes que pueden tomar valor desde
+-9223372036854775808 hasta 9223372036854775807.
+● FLOAT: Números decimales de 32 bit de precisión.
+● DOUBLE: Números decimales de 64 bit de precisión con hasta 15 dígitos decimales.
+● CHAR: Cadena de hasta 255 caracteres de longitud fija.
+● VARCHAR: Cadena de hasta 65.535 caracteres de longitud variable. A diferencia de
+CHAR, si no se ocupa toda la memoria, esta queda libre. CHAR ocupará toda la
+memoria solicitada.
+Para CHAR Y VARCHAR se puede definir un límite máximo de caracteres como
+CHAR(N) Y VARCHAR(N), si se trata de almacenar un valor que sobrepase el límite,
+PostgreSQL entregará un error.
+● DATE: Almacena fecha en formato aaaa-mm-dd. <año>-<mes>-<dia>.
+● TIME: Almacena el tiempo en horario desde 00:00:00 hasta 24:00:00.
+● TIMESTAMP: Almacena fecha y hora juntos: yyyy-mm-dd hh:mm:ss.
+● BOOLEAN: Tiene 3 valores posibles: Verdadero, Falso o NULL.
+Estos pueden representarse para el caso:
+❖ Verdadero: 1, yes, t o true.
+❖ Falso: 0, no, f o false.
+
+Enteros:
+
+SMALLINT: entero de 2 bytes (rango: -32,768 a 32,767)
+INTEGER: entero de 4 bytes (rango: -2,147,483,648 a 2,147,483,647)
+BIGINT: entero de 8 bytes (rango: -9,223,372,036,854,775,808 a 9,223,372,036,854,775,807)
+SERIAL: tipo especial que se utiliza para crear una columna de identidad autoincremental.
+Números de punto flotante:
+
+REAL: número de punto flotante de 4 bytes
+DOUBLE PRECISION: número de punto flotante de 8 bytes
+NUMERIC(p, s): número decimal con precisión arbitraria (p) y escala (s)
+Texto y caracteres:
+
+CHAR(n): cadena de caracteres de longitud fija
+VARCHAR(n): cadena de caracteres de longitud variable con límite máximo (n)
+TEXT: cadena de caracteres de longitud variable sin límite máximo
+Booleanos:
+
+BOOLEAN: valor booleano (true o false)
+Fecha y hora:
+
+DATE: fecha (formato: "YYYY-MM-DD")
+TIME: hora sin zona horaria (formato: "HH:MI:SS")
+TIMESTAMP: fecha y hora con zona horaria (formato: "YYYY-MM-DD HH:MI:SS")
+INTERVAL: intervalo de tiempo
+Otros tipos de datos:
+
+UUID: identificador único universal
+JSON / JSONB: tipo de datos para almacenar objetos JSON
+ARRAY: matriz de valores de un tipo de datos específico
+
+Creación de tablas
+  CREATE TABLE nombre_tabla (columnas);
+Ver la estructura que tiene nuestra tabla, podemos usar el comando:
+  SELECT * FROM nombre_tabla;
+Inserción de datos en una tabla
+  INSERT INTO nombre_tabla (columna1, columna2, columna3) VALUES (valor1,valor2, valor3);
+Actualización de registros
+  UPDATE nombre_tabla SET columna1=valor_nuevo WHERE condicion;
+Eliminación de registro
+  Eliminar toda la tabla
+    DELETE FROM tabla;
+  Seleccionar qué registros queremos borrar
+    DELETE FROM tabla WHERE condicion;
+    
+ Restricciones
+● NOT NULL: La columna no puede tener valores NULL.
+● UNIQUE: Todos los valores de la columna deben ser diferentes unos a otros.
+● SERIAL: Restringe a que el valor numérico sea autoincremental.
+● PRIMARY KEY: Aplica la clave primaria.
+● FOREIGN KEY: Sirve para enlazar 2 tablas, normalmente referente a una clave
+primaria.
+● CHECK: Todos los valores de una columna deben satisfacer una condición en
+específico.
+● DEFAULT: Le da un valor por defecto a aquellos registros que no tengan un valor
+asignado.
+● INDEX: Sirve para crear y recuperar datos de forma rápida.
+
+Transacción
+El sistema permite que se ejecuten todas las sentencias SQL que necesitemos
+  BEGIN ó START 
+Guarda los cambios de la transacción
+  COMMIT 
+Retrocede los cambios realizados
+  ROLLBACK 
+Guarda el punto de partida al cual volver a la hora de aplicar ROLLBACK
+  SAVEPOINT 
+Le asigna nombre a la transacción
+  SET TRANSACTION 
+Para desactivar AUTOCOMMIT
+  \set AUTOCOMMIT off
+Para comprobar que está activado AUTOCOMMIT
+  \echo :AUTOCOMMIT
+  
+Dump para exportar una base de datos
+  pg_dump -U nombre_usuario nombre_db > db.sql
+Dump para exportar todas las bases de datos
+  sudo su - postgres
+  pg_dumpall > /directorio/dumpall.sql
+Restaurar una base de datos
+  sudo su - postgres
+  psql -U postgres nombredb < archivo_restauracion.sql
+Restaurar todas las bases de datos
+  sudo su - postgres
+  psql -f /var/lib/pgsql/backups/dumpall.sql mydb
+  
+  
+  
+  
+  
+  Conector de postgres con Django
+  cambiar motor de base de datos a conectar en el settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'adl-test',
+        'USER' : 'postgres',
+        'PASSWORD': '12345',
+        'HOST' :'127.0.0.1',
+        'PORT': '5432',
+    }
+}
+
+En el terminal con el ambiente activo instalar conectores de postgres:
+    pip install psycopg2
+    
+Ejemplo a desarrollar:
+
+producto_id, nombre, categoria_id, nombre, precio
+-----------------------------------------------------------------------------
+Primera Forma Normal (1FN):
+La 1FN establece que cada columna de una tabla debe contener un solo valor 
+y no debe haber duplicación de datos.
+
+producto_id, nombre, categoria_id, nombre, precio
+
+tabla categorias
+PK categoria_id, nombre
+
+tabla productos
+PK producto_id, nombre, precio, FK categoria_id
+
+------------------------------------------------------------------------------
+Segunda Forma Normal (2FN):
+La 2FN establece que una tabla debe cumplir con la 1FN y que cada columna
+no clave(ni pk, ni fk) debe depender completamente de la clave primaria.
+
+tabla categorias
+PK categoria_id, nombre
+
+tabla productos
+PK producto_id, nombre, FK precio_id FK categoria_id
+
+tabla precios
+PK precio_id, precio, FK producto_id
+
+------------------------------------------------------------------------------
+Tercera Forma Normal (3FN):
+La 3FN establece que una tabla debe cumplir con la 2FN 
+y que no debe haber dependencias transitivas.
+
+tabla categorias
+PK categoria_id, nombre
+
+tabla productos
+PK producto_id, nombre, FK precio_id, FK categoria_id
+
+tabla precios
+PK precio_id, precio, FK producto_id
+
+------------------------------------------------------------------------------
+Desformalizacación
+
+tabla categorias
+PK categoria_id, nombre
+
+tabla productos
+PK producto_id, nombre, precio, FK categoria_id

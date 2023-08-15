@@ -1,0 +1,30 @@
+INSTRUCCIONES
+
+-Crear una base de datos desde el Shell de PostgreSQL, llamada nuevo_curso. 
+postgres=# CREATE DATABASE nuevo_curso;
+CREATE DATABASE
+
+-Crear 3 usuarios desde el Shell de PostgreSQL. 
+postgres=# CREATE USER usuario1 WITH PASSWORD 'pass1';
+CREATE ROLE
+postgres=#  CREATE USER usuario2 WITH PASSWORD 'pass2';
+CREATE ROLE
+postgres=#  CREATE USER usuario3 WITH PASSWORD 'pass3';
+CREATE ROLE
+
+-Listar la nueva base de datos creada desde el Shell de postgreSQL. 
+postgres=# \l nuevo_curso;
+                                                        Listado de base de datos
+   Nombre    |  Dueño   | Codificación |      Collate       |       Ctype        | configuración ICU | Proveedor de locale | Privilegios
+-------------+----------+--------------+--------------------+--------------------+-------------------+---------------------+-------------
+ nuevo_curso | postgres | UTF8         | Spanish_Chile.utf8 | Spanish_Chile.utf8 |                   | libc                |
+(1 fila)
+
+-Ingresar a la base de datos desde el Shell de postgreSQL.
+postgres=# \c nuevo_curso
+Contraseña:
+Ahora está conectado a la base de datos «nuevo_curso» con el usuario «postgres».
+nuevo_curso=#
+
+nuevo_curso=# \conninfo
+Está conectado a la base de datos «nuevo_curso» como el usuario «postgres» en el servidor «localhost» (dirección «::1») port «5432».
